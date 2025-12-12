@@ -1,0 +1,699 @@
+/* --- 1. CORE THEME & VARIABLES --- */
+:root {
+    --primary-orange: #FF5722; /* Signature Brand Color */
+    --bg-cream: #FAFAFA;       /* Premium Off-White Background */
+    --text-black: #111111;     /* Deep Black for Contrast */
+    --text-grey: #666666;
+    
+    /* GLASSMORPHISM */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.5);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    --glass-blur: blur(12px);
+    
+    /* Fonts */
+    --font-head: 'Oswald', sans-serif;
+    --font-body: 'Syne', sans-serif;
+    
+    /* Shapes */
+    --radius-xl: 30px;
+    --radius-md: 15px;
+    
+    /* Effects */
+    --shadow-soft: 0 10px 40px rgba(0,0,0,0.05);
+    --shadow-hover: 0 20px 50px rgba(255, 87, 34, 0.2); /* Orange tint on hover */
+    --transition-smooth: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+/* --- 2. GLOBAL RESET --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--bg-cream);
+    background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, #f4f4f4 100%);
+    font-family: var(--font-body);
+    color: var(--text-black);
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    width: 100%;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-head);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+}
+
+/* IMAGE SMOOTHNESS AND CROPPING FIXES */
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* FIX: Adjusted object position to favor the upper-middle area (50% horizontal, 15% vertical) 
+       This is a safe middle ground to avoid cutting heads/faces aggressively. */
+    object-position: 50% 15%; 
+    display: block;
+    transition: var(--transition-smooth);
+    border-radius: inherit; 
+}
+.grid-img {
+    border-radius: 15px; /* Ensures all grid images have smooth corners */
+}
+
+/* Explicit rule for portrait focus (used in HTML classes) */
+.face-focus {
+    object-position: top center !important; 
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition-smooth);
+}
+
+ul {
+    list-style: none;
+}
+
+/* --- 3. UTILITY CLASSES --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.section-padding {
+    padding: 100px 0;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+.bg-light {
+    background-color: #f4f4f4;
+}
+
+.pt-0 {
+    padding-top: 0 !important;
+}
+
+.text-orange {
+    color: var(--primary-orange);
+}
+.logo-orange {
+    color: var(--primary-orange);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section-title {
+    font-size: 3rem;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* PREMIUM BUTTONS */
+.btn-book, .btn-big-book, .btn-whatsapp {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    color: var(--text-black);
+    border: 2px solid var(--text-black);
+    padding: 14px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* FIX: Set the icon color inside the whatsapp button to the primary orange color */
+.btn-whatsapp i {
+    color: var(--primary-orange) !important; /* CRITICAL FIX: Use !important to override parent text color */
+    transition: color var(--transition-smooth);
+}
+.footer-right .btn-whatsapp i {
+    color: var(--primary-orange) !important; /* Extra specificity for the footer */
+}
+
+.btn-book:hover, .btn-big-book:hover, .btn-whatsapp:hover {
+    background: var(--text-black);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.btn-whatsapp:hover {
+    background: #25D366;
+    border-color: #25D366;
+    color: white;
+}
+
+.btn-book.filled {
+    background: var(--primary-orange);
+    border-color: var(--primary-orange);
+    color: white;
+    box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+}
+
+.btn-book.filled:hover {
+    background: #e64a19;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(255, 87, 34, 0.5);
+}
+
+/* --- 4. PAGE 1: HERO SECTION --- */
+#hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+/* START OF HERO LOGO IMAGE STYLES (UPDATED FOR SIZE AND CENTERING) */
+.hero-logo-image {
+    max-width: 900px; /* FIX: Increased size for a bigger logo */
+    width: 90%; 
+    height: auto;
+    margin-bottom: 50px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards; 
+    
+    /* CRITICAL FIX FOR CENTERING */
+    display: block; 
+    margin: 0 auto 50px auto; /* Centering and bottom margin */
+}
+/* Hide old text elements, ensuring they don't interfere with the layout */
+.hero-logo, .hero-tagline { 
+    display: none !important; 
+}
+/* END OF HERO LOGO IMAGE STYLES */
+
+
+.hero-logo {
+    font-size: 13vw;
+    font-weight: 700;
+    line-height: 0.8;
+    letter-spacing: -4px;
+    color: var(--text-black);
+    margin-bottom: 15px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out forwards; 
+}
+
+.hero-tagline {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: var(--primary-orange);
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeInUp 1s ease-out 0.3s forwards;
+}
+
+/* HAMBURGER MENU */
+.hamburger-menu {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-black);
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    z-index: 2000;
+    background: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    line-height: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+.hamburger-menu:active { transform: scale(0.9); }
+
+/* Hero Navigation Pill */
+.hero-nav {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    padding: 15px 30px;
+    border-radius: 100px;
+    box-shadow: var(--glass-shadow);
+    border: var(--glass-border);
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    animation: slideUp 1s ease-out 0.6s forwards;
+    max-width: 90%;
+}
+
+.close-menu {
+    display: none;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.hero-nav a {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #333;
+    position: relative;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.4);
+    padding: 10px 25px;
+    border-radius: 50px;
+}
+
+.hero-nav a:hover, .hero-nav a.active {
+    background: var(--primary-orange);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
+}
+
+/* --- 5. PAGE 2: ABOUT SECTION --- */
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.about-image-wrapper {
+    height: 650px;
+    border-radius: 325px 325px 0 0;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 20px 20px 0 rgba(255, 87, 34, 0.1);
+    transition: transform 0.5s ease;
+    width: 100%;
+}
+
+.about-image-wrapper:hover { transform: translateY(-10px); }
+
+.about-text-content h2 {
+    font-size: 4.5rem;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.about-text-content .bio {
+    font-size: 1.2rem;
+    color: #444;
+    line-height: 1.8;
+    max-width: 500px;
+}
+
+/* --- 6. PORTFOLIO & GRIDS (DESKTOP: TRUE GRIDS) --- */
+.collage-section { padding: 80px 0; }
+.collage-container { margin-bottom: 80px; }
+.collage-title { font-size: 3rem; margin-bottom: 40px; text-align: center; }
+
+/* Grid 1: 5 Images */
+.collage-grid-1 {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-rows: 250px 250px;
+    gap: 15px;
+}
+.c1-main { grid-column: 1 / 2; grid-row: 1 / 3; }
+
+/* Grid 2: Landscape Fix */
+.collage-grid-2-refined {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.c2-wide-row { height: 450px; width: 100%; }
+.c2-wide-row img { object-position: center; }
+
+/* Grid 3: 3 Images */
+.collage-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 350px;
+    gap: 15px;
+}
+
+/* Grid 5: 5 Images */
+/* --- 6. PORTFOLIO & GRIDS (DESKTOP: TRUE GRIDS) --- */
+/* ... other grid styles ... */
+
+/* Grid 5: 5 Images */
+.collage-grid-5 {
+    display: grid;
+    /* FIX: Change desktop columns to 1fr 1fr 1fr to reserve a center column for the portrait image */
+    grid-template-columns: 1fr 1fr 1fr; 
+    /* Set rows to be equal */
+    grid-template-rows: 300px 300px 450px; 
+    gap: 15px;
+}
+.c5-wide-slot { grid-column: 1 / 3; } /* Spanning columns 1 and 2 */
+.c5-small-slot { grid-column: 3 / 4; } /* Spanning column 3 */
+
+.c5-full-slot {
+    /* FIX: Place the final image in the center column, spanning columns 1 and 2, but 
+       we will use 1 / -1 to let the container determine the width */
+    grid-column: 1 / -1; /* Spans full width */
+    grid-row: 3 / 4;
+    height: 450px; 
+    overflow: hidden; 
+    background-color: transparent; /* Keep background neutral */
+    /* Add flex container to center the image itself */
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+/* --- THE FINAL, CRITICAL FIX FOR THE PORTRAIT IMAGE (img24.jpg) --- */
+.collage-grid-5 .c5-full-slot img {
+    /* **OVERRIDE GLOBAL RULES** */
+    /* Let the image scale to its contained width within the centered frame */
+    width: auto !important; 
+    height: 100% !important; 
+    
+    /* CRITICAL: Use contain to ensure the whole image is visible (no clipping) */
+    object-fit: contain !important; 
+    
+    /* REMOVE MANUAL SCALING - THIS IS WHAT CAUSED THE HUGE BLURRY IMAGE */
+    transform: none !important; 
+    
+    display: block !important;
+    object-position: center !important; 
+    border-radius: 15px;
+    transition: all 0.4s ease;
+}
+/* Re-enable hover effect with a subtle lift/shadow */
+.collage-grid-5 .c5-full-slot:hover .grid-img {
+    /* Subtle hover effect that won't distort the contained image */
+    transform: translateY(-5px) scale(1.01) !important; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); 
+}
+
+/* ZOOM EFFECT (Desktop Only) */
+/* We apply this to the direct children div */
+.collage-grid-1 > div,
+.collage-grid-2-refined > div,
+.collage-grid-3 > div,
+.collage-grid-5 > div {
+    overflow: visible; /* CRITICAL: Allows image to zoom OUT of the box */
+    position: relative;
+    z-index: 1;
+    border-radius: 15px; /* Added explicit radius here for the zoom container */
+}
+
+/* On hover, scale image */
+/* Note: The specific rule for .c5-full-slot is above and takes precedence */
+.collage-grid-1 > div:hover .grid-img,
+.collage-grid-2-refined > div:hover .grid-img,
+.collage-grid-3 > div:hover .grid-img,
+.collage-grid-5 > div:hover .grid-img {
+    transform: scale(1.1); /* Zoom up */
+    z-index: 10;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    position: relative; /* Brings to front */
+}
+
+/* Ensure container z-index matches */
+.collage-grid-1 > div:hover,
+.collage-grid-2-refined > div:hover,
+.collage-grid-3 > div:hover,
+.collage-grid-5 > div:hover {
+    z-index: 10; 
+}
+
+/* FILM REEL ANIMATION (Keep as Slider always) */
+.film-reel-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+.film-track {
+    display: flex;
+    width: max-content;
+    gap: 20px;
+    animation: scrollHorizontal 20s linear infinite;
+}
+.film-track:hover { animation-play-state: paused; }
+.film-item { width: 300px; height: 250px; flex-shrink: 0; border-radius: 12px; overflow: hidden; }
+.film-item:hover { transform: scale(1.1); z-index: 10; }
+
+/* --- 8. SERVICES (FLEXIBLE GRID for 8 Items) --- */
+.services-grid-new {
+    display: grid;
+    /* 4 columns on desktop, responsive for 8 items */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+    gap: 20px;
+}
+
+.service-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+    height: 380px; /* SLIGHT INCREASE in height to prevent top/bottom cropping */
+    width: 100%;
+    transition: transform 0.5s ease;
+    z-index: 1;
+}
+
+/* NEW: Image-specific rules for hover */
+.service-card img {
+    transition: all 0.5s ease;
+}
+.service-card:hover img {
+    /* More pronounced zoom on the image */
+    transform: scale(1.1); 
+    opacity: 0.8; /* Subtle darkening of the background image on hover */
+}
+
+.service-card:hover {
+    /* Keep the card lift */
+    transform: translateY(-5px) scale(1.02); 
+    z-index: 10;
+    /* Stronger, but cleaner shadow */
+    box-shadow: 0 10px 30px rgba(255, 87, 34, 0.5); 
+}
+
+.service-overlay {
+    position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    color: white; pointer-events: none;
+}
+.service-overlay h3 { 
+    font-family: 'Oswald', sans-serif; font-size: 1.4rem; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 5px; color: var(--primary-orange);
+}
+
+/* --- 9. PRICING --- */
+.pricing-wrapper {
+    display: flex; gap: 30px; justify-content: center; align-items: flex-start;
+}
+.pricing-card {
+    flex: 1; background: rgba(255, 255, 255, 0.8); backdrop-filter: var(--glass-blur); border: var(--glass-border);
+    box-shadow: var(--glass-shadow); border-radius: var(--radius-xl); padding: 50px 30px;
+    display: flex; flex-direction: column; min-height: 600px; transition: var(--transition-smooth); width: 100%;
+}
+.pricing-card .btn-book, .pricing-card .btn-book.filled { align-self: center; margin-top: auto; width: 80%; }
+.pricing-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); border-color: var(--primary-orange); }
+.pricing-card.featured { border: 2px solid var(--primary-orange); transform: scale(1.05); position: relative; z-index: 2; }
+.pricing-card.featured:hover { transform: scale(1.08); }
+.badge { position: absolute; top: 0; right: 0; background: var(--primary-orange); color: white; padding: 8px 20px; font-weight: 700; border-bottom-left-radius: 20px; }
+.pack-name { font-size: 2.2rem; color: var(--primary-orange); margin-bottom: 10px; }
+.price { font-size: 2.5rem; font-weight: 700; margin-bottom: 40px; }
+.features { margin-bottom: 40px; flex-grow: 1; }
+.features li { margin-bottom: 15px; display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; }
+.features li i { color: var(--primary-orange); margin-top: 5px; }
+
+/* --- 10. REVIEWS --- */
+.reviews-scroll-container {
+    display: flex; overflow-x: auto; gap: 20px; padding: 20px 0 40px 0;
+    -webkit-overflow-scrolling: touch; width: 100%; scrollbar-width: none; -ms-overflow-style: none;
+}
+.reviews-scroll-container::-webkit-scrollbar { display: none; }
+.review-card {
+    flex: 0 0 350px; background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.5);
+    padding: 25px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s ease;
+}
+.review-card:hover { transform: scale(1.03); border-color: var(--primary-orange); }
+.review-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+.reviewer-name { font-weight: 700; font-size: 1.1rem; }
+.review-stars { color: #FFC107; font-size: 0.9rem; }
+.review-text { font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 20px; }
+.review-reply { background: rgba(255, 87, 34, 0.05); padding: 15px; border-radius: 10px; border-left: 3px solid #FF5722; font-size: 0.85rem; color: #444; }
+
+/* --- 11. FOOTER --- */
+#contact { background: var(--text-black); color: white; border-top-left-radius: 60px; border-top-right-radius: 60px; margin-top: 50px; padding-top: 80px; overflow: hidden; width: 100%; }
+.footer-layout { display: flex; justify-content: space-between; padding-bottom: 60px; gap: 50px; }
+.footer-logo { font-size: 4rem; margin-bottom: 30px; }
+.contact-details p { color: #aaa; margin-bottom: 15px; font-size: 1.1rem; }
+.contact-details i { color: var(--primary-orange); }
+.footer-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; }
+.social-links { display: flex; gap: 20px; }
+.social-links a { 
+    /* FIX: Reduce size for a cleaner 'icon' look */
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    background: rgba(255,255,255,0.1); /* Keep background subtle */
+    color: var(--primary-orange); /* Set icon color to orange */
+    
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 1.2rem; 
+    transition: 0.3s; 
+}
+.social-links a:hover { 
+    /* Enhance hover: background becomes orange, icon becomes white */
+    background: var(--primary-orange); 
+    color: white; /* Icon turns white on hover */
+    transform: rotate(10deg); 
+    box-shadow: 0 0 15px var(--orange-glow); 
+}
+.footer-marquee { background: var(--primary-orange); padding: 20px 0; white-space: nowrap; overflow: hidden; font-family: var(--font-head); font-weight: 700; font-size: 1.5rem; letter-spacing: 2px; width: 100%; }
+.marquee-content { display: inline-block; animation: marquee 20s linear infinite; }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+@keyframes scrollHorizontal { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* --- 13. MOBILE OPTIMIZATION (Hamburger & Sliders) --- */
+@media (max-width: 768px) {
+    body { width: 100%; overflow-x: hidden; }
+    .container { width: 92%; padding: 0 15px; max-width: 100%; }
+    
+    /* ADDED MOBILE RULE FOR LOGO IMAGE SIZE */
+    .hero-logo-image {
+        max-width: 350px !important; /* Slightly increased for better mobile display */
+        margin-bottom: 30px !important;
+    }
+    
+    .hero-logo { font-size: 15vw !important; }
+    .hero-tagline { font-size: 1rem !important; letter-spacing: 3px !important; }
+    .section-title { font-size: 2.5rem; margin-bottom: 30px; }
+    /* FIX: Adjusted bio text size for cleaner mobile look */
+    .about-text-content h2[style] { font-size: 2.5rem !important; line-height: 1.2 !important; }
+    .about-text-content .bio[style] { 
+        font-size: 1.2rem !important; 
+        font-weight: 500 !important;
+        margin-top: 15px !important; 
+    }
+
+    /* HAMBURGER MENU */
+    .hamburger-menu { display: block; }
+    .hero-nav { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: right 0.4s ease; padding: 0; gap: 30px; border-radius: 0; border: none; box-shadow: none; max-width: 100%; }
+    .hero-nav.active { right: 0; }
+    .close-menu { display: block; }
+    .hero-nav a { font-size: 1.5rem; background: transparent; color: var(--text-black); padding: 10px 20px; }
+
+    /* STACKED LAYOUTS */
+    .split-layout { flex-direction: column; gap: 40px; }
+    .about-image-wrapper { height: 400px; width: 100%; border-radius: 200px 200px 0 0; }
+    .pricing-wrapper { flex-direction: column; gap: 30px; }
+    .pricing-card { width: 100%; min-height: auto; }
+    .pricing-card.featured { transform: none; }
+    .footer-layout { flex-direction: column; text-align: center; gap: 40px; }
+    .footer-right { align-items: center; width: 100%; }
+    .social-links { justify-content: center; margin-top: 20px; }
+    .footer-logo { font-size: 3.5rem; }
+    .review-card { flex: 0 0 85%; }
+
+    /* --- MOBILE: CONVERT GRIDS TO SLIDERS --- */
+    .collage-grid-1, 
+    .collage-grid-2-refined, 
+    .collage-grid-3, 
+    .collage-grid-5,
+    .services-grid-new {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 15px;
+        padding-bottom: 20px;
+        scroll-snap-type: x mandatory;
+        height: auto;
+        grid-template-columns: none;
+    }
+    
+    .collage-grid-1::-webkit-scrollbar, 
+    .collage-grid-2-refined::-webkit-scrollbar, 
+    .collage-grid-3::-webkit-scrollbar, 
+    .collage-grid-5::-webkit-scrollbar,
+    .services-grid-new::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Reset grid items to be simple slide cards */
+    .collage-grid-1 > div,
+    .collage-grid-2-refined > div,
+    .collage-grid-3 > div,
+    .collage-grid-5 > div,
+    .services-grid-new > div {
+        flex: 0 0 85%;
+        height: 400px;
+        width: auto;
+        border-radius: 15px;
+        margin: 0;
+    }
+    
+    /* Reset Grid Specific Placements for Mobile */
+    .c1-main, .c5-wide-slot, .c5-small-slot, .c5-full-slot,
+    .srv-1, .srv-2, .srv-3, .srv-4, .srv-5 {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    /* Disable Desktop Hover Effects on Mobile */
+    .collage-grid-1 > div:hover,
+    .collage-grid-2-refined > div:hover,
+    .collage-grid-3 > div:hover,
+    .collage-grid-5 > div:hover,
+    .services-grid-new > div:hover,
+    .service-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}
